@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joc de Preguntes</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #74ebd5, #acb6e5);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: #333;
+    }
+    .pantalla {
+      display: none;
+    }
+    .visible {
+      display: block;
+    }
+    .container {
+      background: #ffffffcc;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      animation: fadeIn 0.6s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 80%;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    button {
+      background: #0077b6;
+      color: #fff;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #023e8a;
+    }
+    .pregunta {
+      font-size: 1.5rem;
+      margin: 20px 0;
+    }
+    .resposta {
+      background: #e0f7fa;
+      color: #000;
+      border: none;
+      margin: 10px;
+      padding: 15px 25px;
+      font-size: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .resposta:hover {
+      transform: scale(1.05);
+      background-color: #b2ebf2;
+    }
+    .resposta.correcta {
+      background-color: #4caf50;
+      color: white;
+    }
+    .resposta.incorrecta {
+      background-color: #f44336;
+      color: white;
+    }
+    #temporitzador {
+      font-size: 1.2rem;
+      margin: 10px;
+      color: #d00000;
+      animation: parpelleig 1s infinite;
+    }
+    @keyframes parpelleig {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .pista {
+      margin-top: 10px;
+      background: #ffe066;
+      padding: 10px;
+      border-radius: 10px;
+    }
+    .dificultat {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .final {
+      margin-top: 20px;
+      font-size: 1.2rem;
+    }
+    table {
+      width: 100%;
+      margin-top: 1rem;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+    }
+    th {
+      background-color: #0077b6;
+      color: #fff;
+    }
+    #pistesRestants {
+      font-weight: bold;
+      color: #0077b6;
+    }
+    .feedback {
+      font-size: 1.2rem;
+      margin: 10px 0;
+      font-weight: bold;
+      animation: zoomIn 0.5s;
+    }
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="inici" class="pantalla visible">
+    <div class="container">
+      <h1>🎮 Joc de Preguntes</h1>
+      <p>Escriu el teu nom per començar:</p>
+      <input type="text" id="nomJugador" placeholder="Nom del jugador">
+      <br><br>
+      <button onclick="comencarJoc()">Començar</button>
+    </div>
+  </div>
+
+  <div id="joc" class="pantalla">
+    <div class="container">
+      <div id="temporitzador"></div>
+      <div class="dificultat" id="nivell"></div>
+      <div class="pregunta" id="pregunta"></div>
+      <div id="respostes"></div>
+      <div id="feedback" class="feedback"></div>
+      <button onclick="mostrarPista()" id="botoPista">💡 Pista (<span id="pistesRestants">2</span>)</button>
+      <div class="pista" id="pista"></div>
+    </div>
+  </div>
+
+  <div id="final" class="pantalla">
+    <div class="container">
+      <h2>🏁 Fi del joc!</h2>
+      <div id="resultats"></div>
+      <table id="classificacio">
+        <thead>
+          <tr><th>Nom</th><th>Puntuació</th></tr>
+        </thead>
+        <tbody id="taulaPuntuacions"></tbody>
+      </table>
+      <button onclick="reiniciarJoc()">🔁 Tornar a jugar</button>
+    </div>
+  </div>
+
+  <script>
+    const preguntes = [
+      // Fàcils (5)
+      { text: "Quin és el riu més llarg del món?", opcions: ["Nil", "Amazones", "Iang-Tsé", "Mississipí"], correcta: 1, pista: "Es troba a Amèrica del Sud", dificultat: "Fàcil", punts: 1 },
+      { text: "Quin planeta és conegut com el 'planeta vermell'?", opcions: ["Venus", "Mart", "Júpiter", "Saturn"], correcta: 1, pista: "El seu nom prové del déu romà de la guerra", dificultat: "Fàcil", punts: 1 },
+      { text: "Quin element químic té el símbol 'O'?", opcions: ["Or", "Osmio", "Oxigen", "Oganessó"], correcta: 2, pista: "És essencial per a la respiració", dificultat: "Fàcil", punts: 1 },
+      { text: "Quants continents hi ha a la Terra?", opcions: ["5", "6", "7", "8"], correcta: 2, pista: "Europa i Àsia són considerats continents separats en aquest model", dificultat: "Fàcil", punts: 1 },
+      { text: "Quin és l'òrgan més gran del cos humà?", opcions: ["Cervell", "Cor", "Pell", "Fetge"], correcta: 2, pista: "Té una superfície d'uns 2m²", dificultat: "Fàcil", punts: 1 },
+      
+      // Intermèdies (8)
+      { text: "Quin any va caure el mur de Berlín?", opcions: ["1985", "1989", "1991", "1979"], correcta: 1, pista: "Va caure al final de la dècada dels 80", dificultat: "Intermedi", punts: 2 },
+      { text: "Quin pintor va crear 'La nit estrellada'?", opcions: ["Pablo Picasso", "Vincent van Gogh", "Salvador Dalí", "Claude Monet"], correcta: 1, pista: "Va tallar-se una orella", dificultat: "Intermedi", punts: 2 },
+      { text: "Quina és la capital d'Austràlia?", opcions: ["Sydney", "Melbourne", "Canberra", "Perth"], correcta: 2, pista: "No és la ciutat més gran del país", dificultat: "Intermedi", punts: 2 },
+      { text: "Quin és el país més gran del món per superfície?", opcions: ["Canadà", "Xina", "Estats Units", "Rússia"], correcta: 3, pista: "Ocupa part d'Europa i part d'Àsia", dificultat: "Intermedi", punts: 2 },
+      { text: "Quina és la fórmula química de l'aigua?", opcions: ["HO", "H2O", "H2O2", "H3O"], correcta: 1, pista: "Conté dos àtoms d'hidrogen", dificultat: "Intermedi", punts: 2 },
+      { text: "Quin llenguatge de programació va crear Guido van Rossum?", opcions: ["Java", "Python", "C++", "JavaScript"], correcta: 1, pista: "El seu nom ve d'un grup còmic britànic", dificultat: "Intermedi", punts: 2 },
+      { text: "Quina és la muntanya més alta d'Àfrica?", opcions: ["Mont Kenya", "Kilimanjaro", "Mont Atlas", "Rwenzori"], correcta: 1, pista: "Es troba a Tanzània", dificultat: "Intermedi", punts: 2 },
+      { text: "Quin és el llibre més venut de la història després de la Bíblia?", opcions: ["Don Quixot", "Història de dues ciutats", "El Petit Príncep", "Cincanes"], correcta: 0, pista: "El seu autor és Miguel de Cervantes", dificultat: "Intermedi", punts: 2 },
+      
+      // Difícils (7)
+      { text: "Quin científic va formular la teoria de la relativitat general?", opcions: ["Niels Bohr", "Albert Einstein", "Stephen Hawking", "Isaac Newton"], correcta: 1, pista: "Va rebre el Premi Nobel de Física el 1921", dificultat: "Difícil", punts: 3 },
+      { text: "Quina és la capital de Bhutan?", opcions: ["Katmandú", "Thimphu", "Dhaka", "Naypyidaw"], correcta: 1, pista: "Està situada a l'Himàlaia", dificultat: "Difícil", punts: 3 },
+      { text: "Quin compositor va crear 'El clavecí ben temperat'?", opcions: ["Mozart", "Beethoven", "Bach", "Chopin"], correcta: 2, pista: "Va viure al segle XVIII", dificultat: "Difícil", punts: 3 },
+      { text: "Quina és la moneda oficial del Brasil?", opcions: ["Peso", "Real", "Cruzeiro", "Bolívar"], correcta: 1, pista: "Es va adoptar el 1994", dificultat: "Difícil", punts: 3 },
+      { text: "Quin element químic té el nombre atòmic 79?", opcions: ["Plata", "Plom", "Or", "Mercuri"], correcta: 2, pista: "S'utilitza en joieria", dificultat: "Difícil", punts: 3 },
+      { text: "Quin país va guanyar el primer Mundial de Futbol el 1930?", opcions: ["Argentina", "Brasil", "Uruguai", "Itàlia"], correcta: 2, pista: "El torneig es va celebrar a aquest mateix país", dificultat: "Difícil", punts: 3 },
+      { text: "Quina és la capital de les Seychelles?", opcions: ["Port Louis", "Victoria", "Malé", "Moroni"], correcta: 1, pista: "És la capital més petita del món", dificultat: "Difícil", punts: 3 }
+    ];
+
+    let jugador = "";
+    let puntuacio = 0;
+    let indexActual = 0;
+    let temps = 20;
+    let temporitzador;
+    let preguntesBarrejades = [];
+    const classificacio = [];
+    let pistesDisponibles = 2;
+    let esperantResposta = false;
+
+    function comencarJoc() {
+      jugador = document.getElementById("nomJugador").value.trim();
+      if (!jugador) return alert("Si us plau, escriu el teu nom.");
+      puntuacio = 0;
+      indexActual = 0;
+      pistesDisponibles = 2;
+      document.getElementById("pistesRestants").textContent = pistesDisponibles;
+      preguntesBarrejades = [...preguntes].sort(() => Math.random() - 0.5);
+      document.getElementById("inici").classList.remove("visible");
+      document.getElementById("joc").classList.add("visible");
+      mostrarPregunta();
+    }
+
+    function mostrarPregunta() {
+      if (indexActual >= preguntesBarrejades.length) {
+        fiDelJoc();
+        return;
+      }
+      esperantResposta = false;
+      temps = 20;
+      document.getElementById("pista").textContent = "";
+      document.getElementById("feedback").textContent = "";
+      const pregunta = preguntesBarrejades[indexActual];
+      document.getElementById("pregunta").textContent = pregunta.text;
+      document.getElementById("nivell").textContent = `${pregunta.dificultat} ${pregunta.dificultat === 'Fàcil' ? '✅' : pregunta.dificultat === 'Intermedi' ? '⚖️' : '❌'}`;
+
+      const contenedor = document.getElementById("respostes");
+      contenedor.innerHTML = "";
+      pregunta.opcions.forEach((opcio, i) => {
+        const boto = document.createElement("button");
+        boto.className = "resposta";
+        boto.textContent = opcio;
+        boto.onclick = () => !esperantResposta && validarResposta(i);
+        contenedor.appendChild(boto);
+      });
+
+      actualitzarTemporitzador();
+      temporitzador = setInterval(() => {
+        temps--;
+        actualitzarTemporitzador();
+        if (temps <= 0) {
+          clearInterval(temporitzador);
+          perdre();
+        }
+      }, 1000);
+    }
+
+    function actualitzarTemporitzador() {
+      document.getElementById("temporitzador").textContent = `⏳ Temps restant: ${temps}s`;
+    }
+
+    function mostrarPista() {
+      if (pistesDisponibles <= 0) {
+        alert("No et queden pistes!");
+        return;
+      }
+      const pregunta = preguntesBarrejades[indexActual];
+      document.getElementById("pista").textContent = `ℹ️ ${pregunta.pista}`;
+      pistesDisponibles--;
+      document.getElementById("pistesRestants").textContent = pistesDisponibles;
+      if (pistesDisponibles <= 0) {
+        document.getElementById("botoPista").disabled = true;
+      }
+    }
+
+    function validarResposta(respostaSeleccionada) {
+      esperantResposta = true;
+      clearInterval(temporitzador);
+      const pregunta = preguntesBarrejades[indexActual];
+      const botonsResposta = document.querySelectorAll(".resposta");
+      
+      // Marcar respostes
+      botonsResposta.forEach((boto, i) => {
+        if (i === pregunta.correcta) {
+          boto.classList.add("correcta");
+        } else if (i === respostaSeleccionada && i !== pregunta.correcta) {
+          boto.classList.add("incorrecta");
+        }
+      });
+
+      // Mostrar feedback
+      const feedback = document.getElementById("feedback");
+      if (respostaSeleccionada === pregunta.correcta) {
+        puntuacio += pregunta.punts;
+        feedback.textContent = `✅ Correcte! +${pregunta.punts} punts`;
+        feedback.style.color = "#4caf50";
+        
+        // Continuar després d'un breu retard
+        setTimeout(() => {
+          indexActual++;
+          mostrarPregunta();
+        }, 2000);
+      } else {
+        feedback.textContent = `❌ Incorrecte! La resposta correcta era: ${pregunta.opcions[pregunta.correcta]}`;
+        feedback.style.color = "#f44336";
+        
+        // Mostrar pantalla final després d'un breu retard
+        setTimeout(() => {
+          mostrarPantallaFinal();
+        }, 2000);
+      }
+    }
+
+    function perdre() {
+      document.getElementById("feedback").textContent = "⏰ Temps esgotat!";
+      document.getElementById("feedback").style.color = "#f44336";
+      setTimeout(() => {
+        mostrarPantallaFinal();
+      }, 1500);
+    }
+
+    function fiDelJoc() {
+      clearInterval(temporitzador);
+      mostrarPantallaFinal();
+    }
+
+    function mostrarPantallaFinal() {
+      document.getElementById("joc").classList.remove("visible");
+      document.getElementById("final").classList.add("visible");
+      document.getElementById("resultats").innerHTML = `<p>👏 ${jugador}, la teva puntuació final és: <strong>${puntuacio}</strong></p>`;
+      classificacio.push({ nom: jugador, punts: puntuacio });
+      mostrarClassificacio();
+    }
+
+    function mostrarClassificacio() {
+      const taula = document.getElementById("taulaPuntuacions");
+      taula.innerHTML = "";
+      classificacio.sort((a, b) => b.punts - a.punts);
+      let posicio = 1;
+      classificacio.forEach(j => {
+        taula.innerHTML += `<tr><td>${posicio}. ${j.nom}</td><td>${j.punts}</td></tr>`;
+        posicio++;
+      });
+    }
+
+    function reiniciarJoc() {
+      document.getElementById("final").classList.remove("visible");
+      document.getElementById("inici").classList.add("visible");
+      document.getElementById("nomJugador").value = "";
+      document.getElementById("botoPista").disabled = false;
+    }
+  </script>
+
+</body>
+</html>
