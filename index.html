@@ -178,14 +178,29 @@
 
   <script>
     const preguntes = [
-      // Fàcils (5)
+      // Fàcils (20)
       { text: "Quin és el riu més llarg del món?", opcions: ["Nil", "Amazones", "Iang-Tsé", "Mississipí"], correcta: 1, pista: "Es troba a Amèrica del Sud", dificultat: "Fàcil", punts: 1 },
       { text: "Quin planeta és conegut com el 'planeta vermell'?", opcions: ["Venus", "Mart", "Júpiter", "Saturn"], correcta: 1, pista: "El seu nom prové del déu romà de la guerra", dificultat: "Fàcil", punts: 1 },
       { text: "Quin element químic té el símbol 'O'?", opcions: ["Or", "Osmio", "Oxigen", "Oganessó"], correcta: 2, pista: "És essencial per a la respiració", dificultat: "Fàcil", punts: 1 },
       { text: "Quants continents hi ha a la Terra?", opcions: ["5", "6", "7", "8"], correcta: 2, pista: "Europa i Àsia són considerats continents separats en aquest model", dificultat: "Fàcil", punts: 1 },
       { text: "Quin és l'òrgan més gran del cos humà?", opcions: ["Cervell", "Cor", "Pell", "Fetge"], correcta: 2, pista: "Té una superfície d'uns 2m²", dificultat: "Fàcil", punts: 1 },
+      { text: "Quin és el color que representa l'esperança en la bandera de l'arc de Sant Martí?", opcions: ["Vermell", "Verd", "Blau", "Groc"], correcta: 1, pista: "També és el color de la natura", dificultat: "Fàcil", punts: 1 },
+      { text: "Quin animal és el més gran del món?", opcions: ["Elefant", "Balena blava", "Tauró blanc", "Girafa"], correcta: 1, pista: "Viu a l'oceà", dificultat: "Fàcil", punts: 1 },
+      { text: "Quants dies té un any de traspàs?", opcions: ["364", "365", "366", "367"], correcta: 2, pista: "Febrer té un dia més", dificultat: "Fàcil", punts: 1 },
+      { text: "Quin és el país més petit del món?", opcions: ["Mònaco", "Vaticà", "San Marino", "Liechtenstein"], correcta: 1, pista: "La seva capital és Ciutat del Vaticà", dificultat: "Fàcil", punts: 1 },
+      { text: "Quin és el component principal del vidre?", opcions: ["Plàstic", "Arena", "Metall", "Fusta"], correcta: 1, pista: "Es troba a les platges", dificultat: "Fàcil", punts: 1 },
+      { text: "Quin és el fruit de la pomer?", opcions: ["Poma", "Pera", "Préssec", "Albercoc"], correcta: 0, pista: "Va caure sobre Newton", dificultat: "Fàcil", punts: 1 },
+      { text: "Quin és el símbol químic de l'or?", opcions: ["Ag", "Au", "Or", "Go"], correcta: 1, pista: "Les seves dues lletres són vocals", dificultat: "Fàcil", punts: 1 },
+      { text: "Quin instrument musical té cordes i es toca amb un arc?", opcions: ["Guitarra", "Violí", "Piano", "Arpa"], correcta: 1, pista: "És el més petit de la seva família", dificultat: "Fàcil", punts: 1 },
+      { text: "Quin és el nom del cavall de Don Quixot?", opcions: ["Babieca", "Rocinante", "Pegàs", "Bucèfal"], correcta: 1, pista: "El nom suggereix que era un cavall comú", dificultat: "Fàcil", punts: 1 },
+      { text: "Quin és el punt d'ebullició de l'aigua?", opcions: ["90°C", "100°C", "110°C", "120°C"], correcta: 1, pista: "A nivell del mar", dificultat: "Fàcil", punts: 1 },
+      { text: "Quin és el país amb més població del món?", opcions: ["Índia", "Estats Units", "Xina", "Indonèsia"], correcta: 2, pista: "Té la Gran Muralla", dificultat: "Fàcil", punts: 1 },
+      { text: "Quin és el color que s'obté en barrejar groc i blau?", opcions: ["Verd", "Lila", "Taronja", "Rosa"], correcta: 0, pista: "Color de la natura", dificultat: "Fàcil", punts: 1 },
+      { text: "Quin és el nom del protagonista de 'Romeo i Julieta'?", opcions: ["Romeo", "Juliet", "Hamlet", "Macbeth"], correcta: 0, pista: "L'altre protagonista és Julieta", dificultat: "Fàcil", punts: 1 },
+      { text: "Quin és el nombre romà que representa 50?", opcions: ["X", "L", "C", "D"], correcta: 1, pista: "És una lletra que no es repeteix", dificultat: "Fàcil", punts: 1 },
+      { text: "Quin és el metal més abundant a l'escorça terrestre?", opcions: ["Ferro", "Alumini", "Coure", "Or"], correcta: 1, pista: "S'utilitza per fer llaunes", dificultat: "Fàcil", punts: 1 },
       
-      // Intermèdies (8)
+      // Intermèdies (23)
       { text: "Quin any va caure el mur de Berlín?", opcions: ["1985", "1989", "1991", "1979"], correcta: 1, pista: "Va caure al final de la dècada dels 80", dificultat: "Intermedi", punts: 2 },
       { text: "Quin pintor va crear 'La nit estrellada'?", opcions: ["Pablo Picasso", "Vincent van Gogh", "Salvador Dalí", "Claude Monet"], correcta: 1, pista: "Va tallar-se una orella", dificultat: "Intermedi", punts: 2 },
       { text: "Quina és la capital d'Austràlia?", opcions: ["Sydney", "Melbourne", "Canberra", "Perth"], correcta: 2, pista: "No és la ciutat més gran del país", dificultat: "Intermedi", punts: 2 },
@@ -194,15 +209,45 @@
       { text: "Quin llenguatge de programació va crear Guido van Rossum?", opcions: ["Java", "Python", "C++", "JavaScript"], correcta: 1, pista: "El seu nom ve d'un grup còmic britànic", dificultat: "Intermedi", punts: 2 },
       { text: "Quina és la muntanya més alta d'Àfrica?", opcions: ["Mont Kenya", "Kilimanjaro", "Mont Atlas", "Rwenzori"], correcta: 1, pista: "Es troba a Tanzània", dificultat: "Intermedi", punts: 2 },
       { text: "Quin és el llibre més venut de la història després de la Bíblia?", opcions: ["Don Quixot", "Història de dues ciutats", "El Petit Príncep", "Cincanes"], correcta: 0, pista: "El seu autor és Miguel de Cervantes", dificultat: "Intermedi", punts: 2 },
+      { text: "Quina és la capital de Noruega?", opcions: ["Estocolm", "Oslo", "Hèlsinki", "Copenhaguen"], correcta: 1, pista: "És una ciutat costanera", dificultat: "Intermedi", punts: 2 },
+      { text: "Quin any va arribar l'home a la Lluna?", opcions: ["1965", "1969", "1972", "1975"], correcta: 1, pista: "Va ser durant la missió Apollo", dificultat: "Intermedi", punts: 2 },
+      { text: "Quina és la moneda oficial del Japó?", opcions: ["Won", "Yen", "Yuan", "Dòlar"], correcta: 1, pista: "S'escriu amb el símbol ¥", dificultat: "Intermedi", punts: 2 },
+      { text: "Quin és el desert més gran d'Amèrica?", opcions: ["Atacama", "Sonora", "Patagònic", "Arizona"], correcta: 0, pista: "Es troba a Sud-amèrica", dificultat: "Intermedi", punts: 2 },
+      { text: "Quin compositor va escriure 'La Flauta Màgica'?", opcions: ["Beethoven", "Mozart", "Bach", "Vivaldi"], correcta: 1, pista: "Va ser un nen prodigi", dificultat: "Intermedi", punts: 2 },
+      { text: "Quin és el país amb més illes del món?", opcions: ["Filipines", "Indonèsia", "Suècia", "Finlàndia"], correcta: 2, pista: "Es troba a Escandinàvia", dificultat: "Intermedi", punts: 2 },
+      { text: "Quina és la capital de Nova Zelanda?", opcions: ["Auckland", "Wellington", "Christchurch", "Sydney"], correcta: 1, pista: "No és la ciutat més gran del país", dificultat: "Intermedi", punts: 2 },
+      { text: "Quin és el metal líquid a temperatura ambient?", opcions: ["Brom", "Mercuri", "Gal·li", "Cesio"], correcta: 1, pista: "S'utilitza en termòmetres", dificultat: "Intermedi", punts: 2 },
+      { text: "Quin és el nom del primer satèl·lit artificial?", opcions: ["Explorer 1", "Sputnik 1", "Vanguard 1", "Telstar 1"], correcta: 1, pista: "Va ser llançat per la URSS", dificultat: "Intermedi", punts: 2 },
+      { text: "Quina és la llengua oficial del Brasil?", opcions: ["Espanyol", "Portuguès", "Brasiler", "Català"], correcta: 1, pista: "Prové d'Europa", dificultat: "Intermedi", punts: 2 },
+      { text: "Quin és el riu més llarg d'Europa?", opcions: ["Danubi", "Volga", "Rin", "Tajo"], correcta: 1, pista: "Desemboca a la mar Càspia", dificultat: "Intermedi", punts: 2 },
+      { text: "Quin és el nom del procés de divisió cel·lular?", opcions: ["Meiosi", "Mitosi", "Fotosíntesi", "Osmosi"], correcta: 1, pista: "Crea cèl·lules idèntiques", dificultat: "Intermedi", punts: 2 },
+      { text: "Quina és la capital de Marroc?", opcions: ["Casablanca", "Rabat", "Marraqueix", "Tànger"], correcta: 1, pista: "No és la ciutat més gran del país", dificultat: "Intermedi", punts: 2 },
+      { text: "Quin és el país amb més volcans actius?", opcions: ["Japó", "Indonèsia", "Xile", "Islàndia"], correcta: 1, pista: "És un arxipèlag", dificultat: "Intermedi", punts: 2 },
+      { text: "Quin és el nom del fundador de Microsoft?", opcions: ["Steve Jobs", "Bill Gates", "Mark Zuckerberg", "Larry Page"], correcta: 1, pista: "És un filantrop", dificultat: "Intermedi", punts: 2 },
       
-      // Difícils (7)
+      // Difícils (22)
       { text: "Quin científic va formular la teoria de la relativitat general?", opcions: ["Niels Bohr", "Albert Einstein", "Stephen Hawking", "Isaac Newton"], correcta: 1, pista: "Va rebre el Premi Nobel de Física el 1921", dificultat: "Difícil", punts: 3 },
       { text: "Quina és la capital de Bhutan?", opcions: ["Katmandú", "Thimphu", "Dhaka", "Naypyidaw"], correcta: 1, pista: "Està situada a l'Himàlaia", dificultat: "Difícil", punts: 3 },
       { text: "Quin compositor va crear 'El clavecí ben temperat'?", opcions: ["Mozart", "Beethoven", "Bach", "Chopin"], correcta: 2, pista: "Va viure al segle XVIII", dificultat: "Difícil", punts: 3 },
       { text: "Quina és la moneda oficial del Brasil?", opcions: ["Peso", "Real", "Cruzeiro", "Bolívar"], correcta: 1, pista: "Es va adoptar el 1994", dificultat: "Difícil", punts: 3 },
       { text: "Quin element químic té el nombre atòmic 79?", opcions: ["Plata", "Plom", "Or", "Mercuri"], correcta: 2, pista: "S'utilitza en joieria", dificultat: "Difícil", punts: 3 },
       { text: "Quin país va guanyar el primer Mundial de Futbol el 1930?", opcions: ["Argentina", "Brasil", "Uruguai", "Itàlia"], correcta: 2, pista: "El torneig es va celebrar a aquest mateix país", dificultat: "Difícil", punts: 3 },
-      { text: "Quina és la capital de les Seychelles?", opcions: ["Port Louis", "Victoria", "Malé", "Moroni"], correcta: 1, pista: "És la capital més petita del món", dificultat: "Difícil", punts: 3 }
+      { text: "Quina és la capital de les Seychelles?", opcions: ["Port Louis", "Victoria", "Malé", "Moroni"], correcta: 1, pista: "És la capital més petita del món", dificultat: "Difícil", punts: 3 },
+      { text: "Quin és el nom de la primera dona que va rebre un Premi Nobel?", opcions: ["Marie Curie", "Rosalind Franklin", "Dorothy Hodgkin", "Maria Goeppert-Mayer"], correcta: 0, pista: "Va guanyar en Física i Química", dificultat: "Difícil", punts: 3 },
+      { text: "Quin és el país amb més llengües oficials?", opcions: ["Índia", "Sud-àfrica", "Suïssa", "Bòsnia i Hercegovina"], correcta: 1, pista: "Té 11 llengües oficials", dificultat: "Difícil", punts: 3 },
+      { text: "Quin és el nom del primer home a l'espai?", opcions: ["Neil Armstrong", "Yuri Gagarin", "Alan Shepard", "John Glenn"], correcta: 1, pista: "Va ser un cosmonauta soviètic", dificultat: "Difícil", punts: 3 },
+      { text: "Quina és la capital de Surinam?", opcions: ["Paramaribo", "Georgetown", "Cayena", "Puerto España"], correcta: 0, pista: "És l'única capital amb aquest nom", dificultat: "Difícil", punts: 3 },
+      { text: "Quin és el nom del primer virus informàtic?", opcions: ["Brain", "Melissa", "ILOVEYOU", "Creeper"], correcta: 3, pista: "Es va crear el 1971", dificultat: "Difícil", punts: 3 },
+      { text: "Quin és el país amb més fusos horaris?", opcions: ["Estats Units", "Rússia", "Xina", "Canadà"], correcta: 1, pista: "Ocupa dos continents", dificultat: "Difícil", punts: 3 },
+      { text: "Quina és la capital de Tuvalu?", opcions: ["Funafuti", "Tarawa", "Majuro", "Palikir"], correcta: 0, pista: "És un atol", dificultat: "Difícil", punts: 3 },
+      { text: "Quin és el nom del primer navegador web?", opcions: ["Internet Explorer", "Mosaic", "Netscape", "WorldWideWeb"], correcta: 3, pista: "Va ser creat per Tim Berners-Lee", dificultat: "Difícil", punts: 3 },
+      { text: "Quina és la capital de São Tomé i Príncipe?", opcions: ["São Tomé", "Príncipe", "Malabo", "Libreville"], correcta: 0, pista: "Té el mateix nom que el país", dificultat: "Difícil", punts: 3 },
+      { text: "Quin és el nom del primer satèl·lit català?", opcions: ["Catalonia-1", "Enxaneta", "Barcelona-1", "Països Catalans-1"], correcta: 1, pista: "Es va llançar el 2021", dificultat: "Difícil", punts: 3 },
+      { text: "Quin és el país amb més reserves d'or?", opcions: ["Estats Units", "Alemanya", "Xina", "Rússia"], correcta: 0, pista: "Té les reserves a Fort Knox", dificultat: "Difícil", punts: 3 },
+      { text: "Quina és la capital de Nauru?", opcions: ["Yaren", "Nauru", "Bairiki", "South Tarawa"], correcta: 0, pista: "No té capital oficial", dificultat: "Difícil", punts: 3 },
+      { text: "Quin és el nom de la primera dona que va circumnavegar el globus?", opcions: ["Jeanne Baret", "Amelia Earhart", "Nellie Bly", "Laura Dekker"], correcta: 0, pista: "Es va disfressar d'home", dificultat: "Difícil", punts: 3 },
+      { text: "Quina és la capital de Kiribati?", opcions: ["Tarawa", "Funafuti", "Majuro", "Palikir"], correcta: 0, pista: "És un atol del Pacífic", dificultat: "Difícil", punts: 3 },
+      { text: "Quin és el nom del primer llibre imprès amb tipus mòbils?", opcions: ["Bíblia de Gutenberg", "Divina Comèdia", "Els Contes de Canterbury", "Don Quixot"], correcta: 0, pista: "Es va imprimir al segle XV", dificultat: "Difícil", punts: 3 }
     ];
 
     let jugador = "";
